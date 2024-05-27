@@ -4,6 +4,25 @@ header{
   padding: 0;
   border-bottom: 1px solid #e72929;
 }
+header .container h1 {
+  font-size: 1.9rem; /* Ajusta el tamaño de la fuente */
+  color: #af1313; /* Ajusta el color del texto */
+  text-align: center; /* Centra el texto */
+  margin-bottom: 10px; /* Espacio debajo del título */
+}
+.blinking-title {
+  animation: blinker 1s linear infinite;
+  font-size: 1.2rem; /* Ajusta el tamaño de la fuente */
+  color: #333; /* Ajusta el color del texto */
+  text-align: center; /* Centra el texto */
+  margin-bottom: 10px; /* Espacio debajo del título */
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 
 a{
   color: #af1313;

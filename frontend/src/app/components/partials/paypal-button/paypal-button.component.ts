@@ -28,46 +28,46 @@ export class PaypalButtonComponent implements OnInit {
   ngOnInit(): void {
     const self = this;
     paypal
-    .Buttons({
-      createOrder: (data: any, actions: any) => {
-        return actions.order.create({
-          purchase_units: [
-            {
-              amount: {
-                currency_code: 'CAD',
-                value: self.order.totalPrice,
+      .Buttons({
+        createOrder: (data: any, actions: any) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  currency_code: 'CAD',
+                  value: self.order.totalPrice,
+                },
               },
-            },
-          ],
-        });
-      },
+            ],
+          });
+        },
 
-      onApprove: async (data: any, actions: any) => {
-        const payment = await actions.order.capture();
-        this.order.paymentId = payment.id;
-        self.orderService.pay(this.order).subscribe(
-          {
-            next: (orderId) => {
-              this.cartService.clearCart();
-              this.router.navigateByUrl('/track/' + orderId);
-              this.toastrService.success(
-                'Payment Saved Successfully',
-                'Success'
-              );
-            },
-            error: (error) => {
-              this.toastrService.error('Payment Save Failed', 'Error');
+        onApprove: async (data: any, actions: any) => {
+          // Simular la aprobación del pago
+          self.order.paymentId = 'SIMULATED_PAYMENT_ID'; // Simular un ID de pago
+          self.orderService.pay(self.order).subscribe(
+            {
+              next: (orderId) => {
+                self.cartService.clearCart();
+                self.router.navigateByUrl('/track/' + orderId);
+                self.toastrService.success(
+                  'Pago aprobado con éxito',
+                  'Success'
+                );
+              },
+              error: (error) => {
+                self.toastrService.error('Error al guardar el pago', 'Error');
+              }
             }
-          }
-        );
-      },
+          );
+        },
 
-      onError: (err: any) => {
-        this.toastrService.error('Payment Failed', 'Error');
-        console.log(err);
-      },
-    })
-    .render(this.paypalElement.nativeElement);
+        onError: (err: any) => {
+          self.toastrService.error('Pago fallido', 'Error');
+          console.log(err);
+        },
+      })
+      .render(this.paypalElement.nativeElement);
 
   }
 

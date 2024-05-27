@@ -35,20 +35,20 @@ router.get('/newOrderForCurrentUser', asyncHandler( async (req:any,res ) => {
     else res.status(HTTP_BAD_REQUEST).send();
 }))
 
-router.post('/pay', asyncHandler( async (req:any, res) => {
-    const {paymentId} = req.body;
+router.post('/pay', asyncHandler(async (req: any, res) => {
     const order = await getNewOrderForCurrentUser(req);
-    if(!order){
+    if (!order) {
         res.status(HTTP_BAD_REQUEST).send('Order Not Found!');
         return;
     }
 
-    order.paymentId = paymentId;
+    // Simular el ID de pago
+    order.paymentId = 'SIMULATED_PAYMENT_ID';
     order.status = OrderStatus.PAYED;
     await order.save();
 
     res.send(order._id);
-}))
+}));
 
 router.get('/track/:id', asyncHandler( async (req, res) => {
     const order = await OrderModel.findById(req.params.id);

@@ -26,4 +26,7 @@ export class PaymentPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  realizarPago() {
+
+  }
 }
